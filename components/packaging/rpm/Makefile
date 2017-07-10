@@ -1,11 +1,12 @@
 ARCH=$(shell uname -m)
+ALPINE:=$(shell $(CURDIR)/../detect_alpine_image)
 ENGINE_DIR:=$(CURDIR)/../../engine
 CLI_DIR:=$(CURDIR)/../../cli
 GITCOMMIT=$(shell cd $(ENGINE_DIR) && git rev-parse --short HEAD)
 VERSION=$(shell cat $(ENGINE_DIR)/VERSION)
 DOCKER_EXPERIMENTAL=0
 GEN_RPM_VER=$(shell ./gen-rpm-ver $(ENGINE_DIR) $(VERSION))
-CHOWN=docker run --rm -i -v $(CURDIR):/v -w /v alpine chown
+CHOWN=docker run --rm -i -v $(CURDIR):/v -w /v $(ALPINE) chown
 RPMBUILD=docker run --privileged --rm -i \
 	-v $(CURDIR)/rpmbuild/SOURCES:/root/rpmbuild/SOURCES \
 	-v $(CURDIR)/rpmbuild/BUILD:/root/rpmbuild/BUILD \
@@ -20,6 +21,7 @@ RPMBUILD_FLAGS=-ba\
 	--define '_origversion $(VERSION)' \
 	--define '_experimental $(DOCKER_EXPERIMENTAL)' \
 	SPECS/docker-ce.spec
+
 
 .PHONY: help clean rpm fedora centos fedora-25 fedora-24 centos-7
 
@@ -56,7 +58,7 @@ rpmbuild/SOURCES/cli.tgz:
 	docker run --rm -i -w /v \
 		-v $(CLI_DIR):/cli \
 		-v $(CURDIR)/rpmbuild/SOURCES:/v \
-		alpine \
+		$(ALPINE) \
 		tar -C / -c -z -f /v/cli.tgz --exclude .git cli
 
 rpmbuild/SOURCES/engine.tgz:
@@ -64,5 +66,5 @@ rpmbuild/SOURCES/engine.tgz:
 	docker run --rm -i -w /v \
 		-v $(ENGINE_DIR):/engine \
 		-v $(CURDIR)/rpmbuild/SOURCES:/v \
-		alpine \
+		$(ALPINE) \
 		tar -C / -c -z -f /v/engine.tgz --exclude .git engine
