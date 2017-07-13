@@ -7,6 +7,7 @@ import (
 
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/filters"
+	"github.com/docker/docker/api/types/mount"
 	"github.com/docker/go-units"
 )
 
@@ -178,6 +179,7 @@ type ImageBuildOptions struct {
 	SecurityOpt []string
 	ExtraHosts  []string // List of extra hosts
 	Target      string
+	Mounts      []mount.Mount // List of build-time mounts
 }
 
 // ImageBuildResponse holds information

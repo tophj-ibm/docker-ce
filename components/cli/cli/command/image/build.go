@@ -39,6 +39,7 @@ type buildOptions struct {
 	labels         opts.ListOpts
 	buildArgs      opts.ListOpts
 	extraHosts     opts.ListOpts
+	mounts         opts.MountOpt
 	ulimits        *opts.UlimitOpt
 	memory         opts.MemBytes
 	memorySwap     opts.MemSwapBytes
@@ -85,6 +86,7 @@ func NewBuildCommand(dockerCli *command.DockerCli) *cobra.Command {
 		ulimits:    opts.NewUlimitOpt(&ulimits),
 		labels:     opts.NewListOpts(opts.ValidateEnv),
 		extraHosts: opts.NewListOpts(opts.ValidateExtraHost),
+		mounts:     opts.NewMountOpt(),
 	}
 
 	cmd := &cobra.Command{
@@ -127,6 +129,7 @@ func NewBuildCommand(dockerCli *command.DockerCli) *cobra.Command {
 	flags.Var(&options.extraHosts, "add-host", "Add a custom host-to-IP mapping (host:ip)")
 	flags.StringVar(&options.target, "target", "", "Set the target build stage to build.")
 	flags.StringVar(&options.imageIDFile, "iidfile", "", "Write the image ID to the file")
+	flags.VarP(&options.mounts, "volume", "v", "Attach a filesystem mount to the service")
 
 	command.AddTrustVerificationFlags(flags)
 
@@ -300,6 +303,7 @@ func runBuild(dockerCli *command.DockerCli, options buildOptions) error {
 		Squash:         options.squash,
 		ExtraHosts:     options.extraHosts.GetAll(),
 		Target:         options.target,
+		Mounts:         options.mounts.Value(),
 	}
 
 	response, err := dockerCli.Client().ImageBuild(ctx, body, buildOptions)

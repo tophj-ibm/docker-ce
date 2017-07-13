@@ -236,6 +236,7 @@ func (b *Builder) create(runConfig *container.Config) (string, error) {
 		// Set a log config to override any default value set on the daemon
 		LogConfig:  defaultLogConfig,
 		ExtraHosts: b.options.ExtraHosts,
+		Mounts:     b.options.Mounts,
 	}
 
 	// Create the container

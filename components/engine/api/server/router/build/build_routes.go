@@ -18,6 +18,7 @@ import (
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/backend"
 	"github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/api/types/mount"
 	"github.com/docker/docker/api/types/versions"
 	"github.com/docker/docker/pkg/ioutils"
 	"github.com/docker/docker/pkg/progress"
@@ -128,6 +129,14 @@ func newImageBuildOptions(ctx context.Context, r *http.Request) (*types.ImageBui
 		options.CacheFrom = cacheFrom
 	}
 
+	var mounts = []mount.Mount{}
+	mountsJSON := r.FormValue("mounts")
+	if mountsJSON != "" {
+		if err := json.Unmarshal([]byte(mountsJSON), &mounts); err != nil {
+			return nil, err
+		}
+		options.Mounts = mounts
+	}
 	return options, nil
 }
 
