@@ -30,6 +30,9 @@ Requires: xz
 # Resolves: rhbz#1165615
 Requires: device-mapper-libs >= 1.02.90-1
 
+# Add requirement of docker-17.05 selinux or newer
+Requires: docker-selinux >= 17.05
+
 # conflicting packages
 Conflicts: docker
 Conflicts: docker-io
