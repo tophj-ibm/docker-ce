@@ -31,7 +31,7 @@ Requires: xz
 Requires: device-mapper-libs >= 1.02.90-1
 
 # Add requirement of docker-17.05 selinux or newer
-Requires: docker-selinux >= 17.05
+Requires: docker-engine-selinux >= 17.05.0.ce-1
 
 # conflicting packages
 Conflicts: docker
