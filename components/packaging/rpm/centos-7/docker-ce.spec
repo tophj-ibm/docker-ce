@@ -21,7 +21,6 @@ BuildRequires: pkgconfig(libsystemd-journal)
 
 # required packages on install
 Requires: /bin/sh
-Requires: container-selinux >= 2.9
 Requires: iptables
 Requires: libcgroup
 Requires: systemd-units
@@ -30,6 +29,9 @@ Requires: xz
 
 # Resolves: rhbz#1165615
 Requires: device-mapper-libs >= 1.02.90-1
+
+# Add requirement of docker-17.05.0-ce selinux or newer
+Requires: docker-engine-selinux >= 17.05.0.ce-1
 
 # conflicting packages
 Conflicts: docker
