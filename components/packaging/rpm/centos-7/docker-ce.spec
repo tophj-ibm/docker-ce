@@ -41,7 +41,6 @@ Conflicts: docker-ee
 
 # Obsolete packages
 Obsoletes: docker-ce-selinux
-Obsoletes: docker-engine-selinux
 Obsoletes: docker-engine
 
 %description
