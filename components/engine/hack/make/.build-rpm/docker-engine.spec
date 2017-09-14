@@ -76,7 +76,7 @@ Requires: device-mapper >= 1.02.90-2
 %if 0%{?with_selinux}
 
 %if 0%{?centos} >= 7 || 0%{?rhel} >= 7 || 0%{?fedora} >= 25
-%global selinux_policyver 3.13.1-23
+Requires: container-selinux >= 2.9
 %endif# centos 7, rhel 7, fedora 25
 
 %if 0%{?oraclelinux} >= 7
