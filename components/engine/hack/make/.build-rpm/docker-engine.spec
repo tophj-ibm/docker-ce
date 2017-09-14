@@ -82,7 +82,6 @@ Requires: device-mapper >= 1.02.90-2
 %if 0%{?oraclelinux} >= 7
 %global selinux_policyver 3.13.1-102.0.3.el7_3.15
 %endif # oraclelinux 7
-%endif # with_selinux
 %if 0%{?fedora} == 24
 %global selinux_policyver 3.13.1-191
 %endif # fedora 24 -- container-selinux on fedora24 does not properly set dockerd, for now just carry docker-engine-selinux for it

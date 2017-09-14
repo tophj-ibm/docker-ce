@@ -125,7 +125,6 @@ set -e
 		# selinux policy referencing systemd things won't work on non-systemd versions
 		# of centos or rhel, which we don't support anyways
 		if [ "${suite%.*}" -gt 6 ] && [[ "$version" != opensuse* ]]; then
-			selinuxDir="selinux"
 			if [ -d "./contrib/selinux-$version" ]; then
 				selinuxDir="selinux-${version}"
 				cat >> "$DEST/$version/Dockerfile.build" <<-EOF
